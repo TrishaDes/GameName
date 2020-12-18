@@ -5,14 +5,25 @@ import javax.swing.JFrame;
 
 public class Window {
 
-	public JFrame newWindow(@NotNull String frameName, @NotNull int width, @NotNull int height, int closeEvent) {																										// teoria
+	public static JFrame newWindow(@NotNull String frameName, @NotNull int width, int height[]) {																										// teoria
 		JFrame frame = new JFrame(frameName); // nuovo Frame di JFrame, non usiamo Window perché è più macchinoso
-		frame.setDefaultCloseOperation(closeEvent); // altrimenti usa l'argomento fornito
+		if (height.length == 1) {
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		} else {
+			frame.setDefaultCloseOperation(height[1]); // altrimenti usa l'argomento fornito
+		}
+		frame.setSize(width, height[0]); // impostiamo la grandezza della finestra
+		return frame; // restituiamo la finestra (altrimenti non sarebbe un costruttore)
+	}
+	
+	public static JFrame newWindow(@NotNull String frameName, @NotNull int width, int height) {																										// teoria
+		JFrame frame = new JFrame(frameName); // nuovo Frame di JFrame, non usiamo Window perché è più macchinoso
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(width, height); // impostiamo la grandezza della finestra
 		return frame; // restituiamo la finestra (altrimenti non sarebbe un costruttore)
 	}
 
-	public void obliterate(@NotNull JFrame frame) { 
+	public static void obliterate(@NotNull JFrame frame) { 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(false);
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED)); 
