@@ -20,9 +20,9 @@ public class Game extends Canvas implements Runnable{
 	private boolean running=false;
 	
 	private Handler handler;
-	
+	static Window window;
 	public Game() {
-		 Window window = new Window("Gioco :)", width, height, true, true, this);
+		 window = new Window("Gioco :)", width, height, true, true, this);
 		 handler=new Handler();
 		 this.addKeyListener(new KeyInput(window,handler));
 		 handler.addObject(new Player(width/2-32,height/2-32,ID.Player));
@@ -79,6 +79,14 @@ public class Game extends Canvas implements Runnable{
 	private void tick() {
 		handler.tick();
 	}
+	
+	public static double clamp(double var,char dimension) {
+		double max=dimension=='w'?window.getDimensions().width-32:window.getDimensions().height-32.5;
+		if(var>=max) return var=max;
+		else if(var<=0) return var=0;
+		else return var;
+	}
+	
 	private void render() {
 		BufferStrategy bs=this.getBufferStrategy();
 		if(bs==null) {

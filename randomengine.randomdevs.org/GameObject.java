@@ -3,9 +3,9 @@ package gv.randomdevs.org;
 import java.awt.Graphics;
 
 public abstract class GameObject {
-	protected int x,y;
+	protected double x,y;
 	protected ID id;
-	protected int velx,vely;
+	protected double velx,vely;
 	public GameObject(int x,int y, ID id) {
 		this.x=x;
 		this.y=y;
@@ -14,14 +14,14 @@ public abstract class GameObject {
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
 	public void setX(int x) {
 		this.x = x;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -36,7 +36,7 @@ public abstract class GameObject {
 		this.id = id;
 	}
 	
-	public int getVelx() {
+	public double getVelx() {
 		return velx;
 	}
 	
@@ -44,7 +44,7 @@ public abstract class GameObject {
 		this.velx = velx;
 	}
 	
-	public int getVely() {
+	public double getVely() {
 		return vely;
 	}
 	

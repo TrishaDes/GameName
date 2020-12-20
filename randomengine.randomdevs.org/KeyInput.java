@@ -4,11 +4,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter{
-	Window window;
+	private Window window;
 	Handler handler;
+	private GameObject player;
+	private boolean keyDown[];
 	public KeyInput(Window window,Handler handler) {
 		this.window=window;
-		this.handler=handler;
+		this.handler=handler;	//W     S      D      A
+		keyDown = new boolean[] {false, false, false, false};
 	}
 	
 	@Override
@@ -54,17 +57,34 @@ public class KeyInput extends KeyAdapter{
 				break;
 		}
 	}
-	private void isMovementChecker(int key,boolean hasReleasedIntent) {
-		for(GameObject object : handler.objects) {
-			if(object.getId()==ID.Player) 
-				switch(key) {
-					case(KeyEvent.VK_D):
-						object.setVelx(hasReleasedIntent?0:5);
-						break;
-					case(KeyEvent.VK_A):
-						object.setVelx(hasReleasedIntent?0:-5);
-						break;
-				}
-		}	
+	private void isMovementChecker(int key, boolean hasReleasedIntent) {
+		//TODO: Migliorare questo codice per farlo funzionare sia con releaseKey che con keyPressed
+        for(GameObject object:handler.objects) {
+			if(object.getId()==ID.Player) {
+				player=object;
+			}
+		}
+		if(key == KeyEvent.VK_W && hasReleasedIntent) keyDown[0] = false;
+        if(key == KeyEvent.VK_S && hasReleasedIntent) keyDown[1] = false;
+        if(key == KeyEvent.VK_D && hasReleasedIntent) keyDown[2] = false;
+        if(key == KeyEvent.VK_A && hasReleasedIntent) keyDown[3] = false;
+        if(!keyDown[0] && !keyDown[1] && hasReleasedIntent) {
+            player.setVely(0);
+        }
+        if(!keyDown[2] && !keyDown[3] && hasReleasedIntent) {
+            player.setVelx(0);
+        }
+        if(key == KeyEvent.VK_W && !keyDown[1] && !hasReleasedIntent) {
+            player.setVely(-5); keyDown[0] = true;
+        }
+        if(key == KeyEvent.VK_S && !keyDown[0] && !hasReleasedIntent) {
+            player.setVely(5); keyDown[1] = true;
+        }
+        if(key == KeyEvent.VK_D && !keyDown[3] && !hasReleasedIntent) {
+            player.setVelx(5); keyDown[2] = true;
+        }
+        if(key == KeyEvent.VK_A && !keyDown[2] && !hasReleasedIntent) {
+            player.setVelx(-5); keyDown[3] = true;
+        }
 	}
 }

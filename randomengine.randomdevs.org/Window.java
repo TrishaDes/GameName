@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 public class Window extends Canvas{
@@ -18,7 +19,7 @@ public class Window extends Canvas{
 	public Window(String title, int width, int height, boolean isFullscreen, boolean canResize, Game game) {
 		JFrame frame=new JFrame(title);
 		frame.setPreferredSize(new Dimension(width,height));
-		frame.setMinimumSize(new Dimension(width,height));
+		frame.setMinimumSize(new Dimension(0,0));
 		frame.setMaximumSize(new Dimension(width,height));
 		frame.setLocationRelativeTo(null);
 		frame.add(game);
@@ -61,5 +62,8 @@ public class Window extends Canvas{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public Dimension getDimensions() {
+		return frame.getContentPane().getSize();
 	}
 }
